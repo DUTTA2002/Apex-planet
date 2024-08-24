@@ -11,7 +11,7 @@ if (!isLoggedIn()) {
 
 function getAllUsers() {
     global $conn;
-    $query = "SELECT * FROM users";
+    $query = "SELECT * FROM posts";
     $result = $conn->query($query);
     $users = array();
     while ($row = $result->fetch_assoc()) {
@@ -22,7 +22,7 @@ function getAllUsers() {
 
 function getUserById($id) {
     global $conn;
-    $query = "SELECT * FROM users WHERE id = '$id'";
+    $query = "SELECT * FROM posts WHERE id = '$id'";
     $result = $conn->query($query);
     return $result->fetch_assoc();
 }
@@ -30,19 +30,19 @@ function getUserById($id) {
 function createUser($username, $password) {
     global $conn;
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
-    $query = "INSERT INTO users (username, password) VALUES ('$username', '$password_hash')";
+    $query = "INSERT INTO posts (username, password) VALUES ('$username', '$password_hash')";
     $conn->query($query);
 }
 
 function updateUser($id, $username) {
     global $conn;
-    $query = "UPDATE users SET username = '$username' WHERE id = '$id'";
+    $query = "UPDATE posts SET username = '$username' WHERE id = '$id'";
     $conn->query($query);
 }
 
 function deleteUser($id) {
     global $conn;
-    $query = "DELETE FROM users WHERE id = '$id'";
+    $query = "DELETE FROM posts WHERE id = '$id'";
     $conn->query($query);
 }
 ?>
