@@ -2,8 +2,8 @@
 /* Database credentials. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
 define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'apexplanet');
-define('DB_PASSWORD', '12345@');
+define('DB_USERNAME', 'rkumar');
+define('DB_PASSWORD', '12345');
 define('DB_NAME', 'blog');
 
 /* Attempt to connect to MySQL database */

@@ -81,7 +81,7 @@ $conn->close();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body {
-            background-color: #7CF5FF;
+            background-color: #f4f4f9;
             font-family: 'Arial', sans-serif;
         }
         .table-custom {
@@ -133,19 +133,12 @@ $conn->close();
         .btn-custom-danger:hover {
             background-color: #c0392b;
         }
-        .header-container {
-            text-align: center; /* Center the title */
-            margin-bottom: 20px; /* Add space below the title */
-        }
     </style>
 </head>
 <body>
     <div class="container mt-4">
-        <div class="header-container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="text-primary">CRUD Application</h2>
-        </div>
-        
-        <div class="d-flex justify-content-center align-items-center mb-3">
             <div class="d-flex align-items-center">
                 <form action="" method="get" class="mr-3">
                     <input type="text" name="search" class="form-control" placeholder="Search..." value="<?php echo htmlspecialchars($search); ?>">
