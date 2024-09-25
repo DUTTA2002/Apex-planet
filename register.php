@@ -97,11 +97,11 @@ h6{
                 <form method="POST">
                     <div class="mb-3 text-start">
                         <label for="username" class="form-label">Username:</label>
-                        <input type="text" class="form-control form-control-custom" id="username" name="username" placeholder="Enter Your Username" required>
+                        <input type="text" class="form-control form-control-custom" id="username" name="username"  required>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control form-control-custom" id="password" name="password" placeholder="Enter Your Password" required>
+                        <input type="password" class="form-control form-control-custom" id="password" name="password" required>
                     </div>
                     <div class="mb-3 text-start">
                         <label for="role" class="form-label">Role:</label>
