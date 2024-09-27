@@ -84,33 +84,6 @@ $conn->close();
             background-color: #7CF5FF;
             font-family: 'Arial', sans-serif;
         }
-        .table-custom {
-            border-collapse: separate;
-            border-spacing: 0 15px;
-            width: 100%;
-        }
-        .table-custom thead th {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 15px;
-        }
-        .table-custom tbody tr {
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .table-custom tbody tr:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        .table-custom td, .table-custom th {
-            padding: 12px 15px;
-        }
-        .table-custom td {
-            border-top: 1px solid #dee2e6;
-        }
         .btn-custom {
             background-color: #1e90ff;
             color: white;
@@ -134,21 +107,36 @@ $conn->close();
             background-color: #c0392b;
         }
         .header-container {
-            text-align: center; /* Center the title */
-            margin-bottom: 20px; /* Add space below the title */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        /* Styling the search box with an icon */
+        .input-group .form-control {
+            border-right: 0;
+        }
+        .input-group .input-group-append .btn {
+            border-left: 0;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-4">
+    
+    <div class="container" style="margin-top: 2.5cm;">
         <div class="header-container">
-            <h2 class="text-primary">CRUD Application</h2>
+            <h2 class="text-dark">CRUD Application</h2>
         </div>
         
         <div class="d-flex justify-content-center align-items-center mb-3">
             <div class="d-flex align-items-center">
                 <form action="" method="get" class="mr-3">
-                    <input type="text" name="search" class="form-control" placeholder="Search..." value="<?php echo htmlspecialchars($search); ?>">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search..." value="<?php echo htmlspecialchars($search); ?>">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </form>
                 <?php if ($role == 'admin'): ?>
                     <a href="add_post.php" class="btn btn-primary btn-sm">
@@ -156,54 +144,45 @@ $conn->close();
                     </a>
                 <?php endif; ?>
             </div>
-            <button class="btn btn-custom" onclick="window.location.href='logout.php'" title="Logout">
-                <i class="bi bi-box-arrow-right"></i> Logout
-            </button>
+            
         </div>
 
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                     <span>Posts</span>
+                    <button class="btn btn-custom" onclick="window.location.href='logout.php'" title="Logout">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-custom">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Title</th>
-                                    <th>Content</th>
-                                    <th>Created At</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php while ($row = $result->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($row['id']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['title']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['content']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['created_at']); ?></td>
-                                    <td>
-                                        <button class="btn btn-custom btn-sm" 
-                                            onclick="editDetails('<?php echo htmlspecialchars($row['id']); ?>', '<?php echo htmlspecialchars($row['title']); ?>', '<?php echo htmlspecialchars($row['content']); ?>')" 
-                                            data-toggle="tooltip" title="Edit">
-                                            <i class="bi bi-pencil-square"></i> 
+                    <div class="row">
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($row['title']); ?></h5>
+                                    <p class="card-text"><?php echo htmlspecialchars($row['content']); ?></p>
+                                    <small class="text-muted">Created at: <?php echo htmlspecialchars($row['created_at']); ?></small>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between">
+                                    <button class="btn btn-custom btn-sm" 
+                                        onclick="editDetails('<?php echo htmlspecialchars($row['id']); ?>', '<?php echo htmlspecialchars($row['title']); ?>', '<?php echo htmlspecialchars($row['content']); ?>')" 
+                                        data-toggle="tooltip" title="Edit">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </button>
+                                    <?php if ($role == 'admin'): ?>
+                                    <form action="" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                        <button type="submit" name="delete" class="btn btn-custom-danger btn-sm" data-toggle="tooltip" title="Delete">
+                                            <i class="bi bi-trash3"></i> Delete
                                         </button>
-                                        <?php if ($role == 'admin'): ?>
-                                        <form action="" method="post" class="d-inline">
-                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                            <button type="submit" name="delete" class="btn btn-custom-danger btn-sm" data-toggle="tooltip" title="Delete">
-                                                <i class="bi bi-trash3"></i> 
-                                            </button>
-                                        </form>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                                <?php endwhile; ?>
-                            </tbody>
-                        </table>
+                                    </form>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endwhile; ?>
                     </div>
 
                     <!-- Pagination -->
@@ -258,9 +237,9 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function editDetails(id, title, content) {
-            document.getElementById('editId').value = id;
-            document.getElementById('editTitle').value = title;
-            document.getElementById('editContent').value = content;
+            $('#editId').val(id);
+            $('#editTitle').val(title);
+            $('#editContent').val(content);
             $('#editModal').modal('show');
         }
     </script>
